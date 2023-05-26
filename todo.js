@@ -32,7 +32,7 @@ app.post("/todos/new", (req, res) => {
 });
 
 // DELETE /todos/:id
-app.delete("/todos/:id", (req, res) => {
+app.delete("/todos/:id/delete", (req, res) => {
   const id = parseInt(req.params.id);
   const index = todos.findIndex((todo) => todo.id === id);
 
@@ -40,6 +40,7 @@ app.delete("/todos/:id", (req, res) => {
     return res.status(404).json({ error: "Todo not found" });
   }
   const deletedTodo = todos.splice(index, 1)[0];
+  res.sendStatus(200);
 
   res.json(deletedTodo);
 });
@@ -48,6 +49,7 @@ app.delete("/todos/deleteAll", (req, res) => {
   todos = [];
   deletedTodo = todos.splice(index, 1)[0];
   res.json(deletedTodo);
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
@@ -55,10 +57,9 @@ app.listen(port, () => {
 });
 
 // Simulate a Delete request to /todos/:id
-/*
+
 app._router.handle(
-  { method: "DELETE", url: `/todos/${todos.id}` },
+  { method: "DELETE", url: `/todos/${todos[0]}` },
   {},
   () => {}
 );
-*/
